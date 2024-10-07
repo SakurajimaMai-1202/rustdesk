@@ -608,7 +608,7 @@ class RustdeskImpl {
 
   Future<void> sessionElevateDirect(
       {required UuidValue sessionId, dynamic hint}) {
-    throw UnimplementedError();
+    return Future(() => js.context.callMethod('setByName', ['elevate_direct']));
   }
 
   Future<void> sessionElevateWithLogon(
@@ -618,7 +618,7 @@ class RustdeskImpl {
       dynamic hint}) {
     return Future(() => js.context.callMethod('setByName', [
           'elevate_with_logon',
-          jsonEncode({username, password})
+          jsonEncode({'username': username, 'password': password})
         ]));
   }
 
@@ -936,7 +936,7 @@ class RustdeskImpl {
   }
 
   Future<void> mainForgetPassword({required String id, dynamic hint}) {
-    return Future(() => js.context.callMethod('setByName', ['forget']));
+    return mainSetPeerOption(id: id, key: 'password', value: '');
   }
 
   Future<bool> mainPeerHasPassword({required String id, dynamic hint}) {
@@ -1063,7 +1063,7 @@ class RustdeskImpl {
         () => js.context.callMethod('getByName', ['option', 'last_remote_id']));
   }
 
-  Future<String> mainGetSoftwareUpdateUrl({dynamic hint}) {
+  Future<void> mainGetSoftwareUpdateUrl({dynamic hint}) {
     throw UnimplementedError();
   }
 
